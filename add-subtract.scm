@@ -1,4 +1,4 @@
-;Use addition and subtraction to calculate a set of numbers, let their results equal the specified number
+;Use addition and subtraction to calculate a set of numbers (lat), let their results equal the specified number i
 
 (define sum
   (lambda (lat)
