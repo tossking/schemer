@@ -7,41 +7,37 @@
     (- x 1)))
 
 (define a-pair?
-	(lambda (x)
-		(cond
-			((null? x) #f)
-			((atom? x) #f)
-			((null? (cdr x)) #f)
-			((null? (cdr (cdr x))) #t)
-			(else #f))))
+  (lambda (x)
+    (cond
+      ((null? x) #f)
+      ((atom? x) #f)
+      ((null? (cdr x)) #f)
+      ((null? (cdr (cdr x))) #t)
+      (else #f))))
 
 (define first
-	(lambda (p)
-		(car p)))
+  (lambda (p)
+    (car p)))
 (define second
-	(lambda (p)
-		(car (cdr p))))
+  (lambda (p)
+    (car (cdr p))))
 (define third
-	(lambda (p)
-		(car (cdr (cdr p)))))
+  (lambda (p)
+    (car (cdr (cdr p)))))
 (define build
-	(lambda (s1 s2)
-		(cons s1 (cons s2 (quote ())))))
+  (lambda (s1 s2)
+    (cons s1 (cons s2 (quote ())))))
 
 (define fun?
-	(lambda (rel)
-		(set? (firsts rel))))
+  (lambda (rel)
+    (set? (firsts rel))))
 
 (define test_fun?
-	(car (cdr (car (cons (cons 1 (cons 2 (quote ()))) (quote ()))))))
+  (car (cdr (car (cons (cons 1 (cons 2 (quote ()))) (quote ()))))))
 
 (define atom?
-	(lambda (x)
-		(and (not (pair? x)) (not (null? x)) (not (list? x)))))
-
-(define sub1
   (lambda (x)
-    (- x 1)))
+    (and (not (pair? x)) (not (null? x)) (not (list? x)))))
 
 (define bigger
   (lambda (x y)
@@ -52,7 +48,7 @@
 
 (define test_bigger
   (bigger 5 5))
-  
+
 (define test_bigger2
   (bigger 3 4))
 
@@ -71,121 +67,121 @@
 ;;)
 
 (define firsts
-	(lambda (l)
-		(cond
-			((null? l) (quote ()))
-		;	((null? (car l)) (quote ()))
-			(else (cons (car (car l)) (firsts (cdr l))))
-		)
-	)
-)
+  (lambda (l)
+    (cond
+      ((null? l) (quote ()))
+      ;	((null? (car l)) (quote ()))
+      (else (cons (car (car l)) (firsts (cdr l))))
+      )
+    )
+  )
 
 (define test_firsts
-		(firsts (list (list 1 2) (list 3 4))))
+  (firsts (list (list 1 2) (list 3 4))))
 
 (define insertg
-	(lambda (test?)
-		(lambda (new old l)
-			(cond
-				((null? l) (quote()))
-				((test? old (car l)) (cons old (cons new (cdr l))))
-				(else (cons (car l) ((insertg test?) new old (cdr l))))))))
+  (lambda (test?)
+    (lambda (new old l)
+      (cond
+        ((null? l) (quote()))
+        ((test? old (car l)) (cons old (cons new (cdr l))))
+        (else (cons (car l) ((insertg test?) new old (cdr l))))))))
 (define insert-g
-	(lambda (seq)
-		(lambda (new old l)
-			(cond
-				((null? l) (quote()))
-				((eq? old (car l)) (seq new old (cdr l)))
-				(else (cons (car l) ((insert-g seq) new old (cdr l))))))))
+  (lambda (seq)
+    (lambda (new old l)
+      (cond
+        ((null? l) (quote()))
+        ((eq? old (car l)) (seq new old (cdr l)))
+        (else (cons (car l) ((insert-g seq) new old (cdr l))))))))
 (define seqrem
-	(lambda (new old l)
-		l))
+  (lambda (new old l)
+    l))
 (define yyy
-	(lambda (a l)
-		((insert-g seqrem) #f a l)))
+  (lambda (a l)
+    ((insert-g seqrem) #f a l)))
 (define test_yyy
-	(yyy 3 (list 1 2 3 4 3 2 1 3 2 1)))
+  (yyy 3 (list 1 2 3 4 3 2 1 3 2 1)))
 
 (define insertR
-	(lambda (new old lat)
-		(cond
-			((null? lat) (quote()))
-			((eq? old (car lat)) (cons old (cons new (cdr lat))))
-			(else (cons (car lat) (insertR new old (cdr lat))))
-		)
-	)
-)
+  (lambda (new old lat)
+    (cond
+      ((null? lat) (quote()))
+      ((eq? old (car lat)) (cons old (cons new (cdr lat))))
+      (else (cons (car lat) (insertR new old (cdr lat))))
+      )
+    )
+  )
 
 (define insertL
-	(lambda (new old lat)
-		(cond
-			((null? lat) (quote()))
-			((eq? old (car lat)) (cons new lat))
-			(else (cons (car lat) (insertL new old (cdr lat))))
-		)
-	)
-)
+  (lambda (new old lat)
+    (cond
+      ((null? lat) (quote()))
+      ((eq? old (car lat)) (cons new lat))
+      (else (cons (car lat) (insertL new old (cdr lat))))
+      )
+    )
+  )
 
 (define insertR*
-	(lambda (new old l)
-		(cond
-			((null? l) (quote()))
-			((atom? (car l))
-				(cond
-					((eq? old (car l)) (cons old (cons new (insertR* new old (cdr l)))))
-					(else (cons (car l) (insertR* new old (cdr l))))))
-			(else (cons (insertR* new old (car l)) (insertR* new old (cdr l)))))))
+  (lambda (new old l)
+    (cond
+      ((null? l) (quote()))
+      ((atom? (car l))
+       (cond
+         ((eq? old (car l)) (cons old (cons new (insertR* new old (cdr l)))))
+         (else (cons (car l) (insertR* new old (cdr l))))))
+      (else (cons (insertR* new old (car l)) (insertR* new old (cdr l)))))))
 
 (define test_insertR*
-	(insertR* 4 3 (list 1 2 3 5 3 3 3 (list 1 2 3) (list (list (list 1 2 3))))))
+  (insertR* 4 3 (list 1 2 3 5 3 3 3 (list 1 2 3) (list (list (list 1 2 3))))))
 
 
 (define subst
-	(lambda (new old lat)
-		(cond
-			((null? lat) (quote()))
-			((eq? old (car lat)) (cons new (cdr lat)))
-			(else (cons (car lat) (subst new old (cdr lat))))
-		)
-	)
-)
+  (lambda (new old lat)
+    (cond
+      ((null? lat) (quote()))
+      ((eq? old (car lat)) (cons new (cdr lat)))
+      (else (cons (car lat) (subst new old (cdr lat))))
+      )
+    )
+  )
 
 (define test_insertR
-	(insertR 4 3 (list 1 2 3 5)))
+  (insertR 4 3 (list 1 2 3 5)))
 
 (define test_insertL
-	(insertL 4 5 (list 1 2 3 5)))
+  (insertL 4 5 (list 1 2 3 5)))
 
 (define test_subst
-	(subst 4 5 (list 1 2 3 5)))
+  (subst 4 5 (list 1 2 3 5)))
 
 (define mutiinsertR
-	(lambda (new old lat)
-		(cond
-			((null? lat) (quote()))
-			((eq? old (car lat)) (cons old (cons new (mutiinsertR new old (cdr lat)))))
-			(else (cons (car lat) (mutiinsertR new old (cdr lat))))
-		)
-	)
-)
+  (lambda (new old lat)
+    (cond
+      ((null? lat) (quote()))
+      ((eq? old (car lat)) (cons old (cons new (mutiinsertR new old (cdr lat)))))
+      (else (cons (car lat) (mutiinsertR new old (cdr lat))))
+      )
+    )
+  )
 
 (define test_mutiinsertR
-	(mutiinsertR 4 3 (list 1 2 3 5 3 3 3)))
+  (mutiinsertR 4 3 (list 1 2 3 5 3 3 3)))
 
 (define lat?
-	(lambda (x)
-		(cond 
-			((null? x) #t)
-			((atom? (car x)) (lat? (cdr x)))
-			(else #f)
-		)
-	)
-)
+  (lambda (x)
+    (cond 
+      ((null? x) #t)
+      ((atom? (car x)) (lat? (cdr x)))
+      (else #f)
+      )
+    )
+  )
 
 (define test_lat?
-		(and (lat? ())
-			(lat? (list 1 2 3 4))
-			(not (lat? (list 1 (cons 1 2))))))
+  (and (lat? ())
+       (lat? (list 1 2 3 4))
+       (not (lat? (list 1 (cons 1 2))))))
 
 (define length? 
   (lambda (lat)
@@ -206,29 +202,29 @@
   (pick 4 (list 1 2 3 4 5 6)))
 
 (define looking
-	(lambda (a lat)
-		(keep-looking a (pick 1 lat) lat)))
+  (lambda (a lat)
+    (keep-looking a (pick 1 lat) lat)))
 
 (define keep-looking
-	(lambda (a sorn lat)
-		(cond
-			((number? sorn) (keep-looking a (pick sorn lat) lat))
-			(else (eq? sorn a)))))
+  (lambda (a sorn lat)
+    (cond
+      ((number? sorn) (keep-looking a (pick sorn lat) lat))
+      (else (eq? sorn a)))))
 
 (define test_looking
-	(looking "apple" (list 6 2 4 "apple" 5 7 3)))
+  (looking "apple" (list 6 2 4 "apple" 5 7 3)))
 
 (define test_looking2
-	(looking "apple" (list 6 2 "orange" "apple" 5 7 3)))
+  (looking "apple" (list 6 2 "orange" "apple" 5 7 3)))
 
 (define member?
-	(lambda (a lat)
-		(cond
-			((null? lat) #f)
-			(else (or (eq? (car lat) a) (member? a(cdr lat)))))))
+  (lambda (a lat)
+    (cond
+      ((null? lat) #f)
+      (else (or (eq? (car lat) a) (member? a(cdr lat)))))))
 
 (define test_member
-	(member? 3 (list 1 2 3 4)))
+  (member? 3 (list 1 2 3 4)))
 
 (define no-nums
   (lambda (lat)
@@ -279,9 +275,9 @@
     (cond
       ((null? l) (quote ()))
       ((atom? (car l))
-        (cond
-           ((equal? a (car l)) (rember* a (cdr l)))
-           (else (cons (car l) (rember* a (cdr l))))))
+       (cond
+         ((equal? a (car l)) (rember* a (cdr l)))
+         (else (cons (car l) (rember* a (cdr l))))))
       (else (cons (rember* a (car l)) (rember* a (cdr l)))))))
 
 (define test_rember*
@@ -292,37 +288,37 @@
   (rember* "a" (list "a" "b" "c" 1 2 3 (list "a" 4) 5 "d" (list (list (list "e" "f" "a" 6))))))
 
 (define rember
-	(lambda (a l)
-		(cond
-		;;;	((atom? a) l)
-			((null? l) ())
-			((eq? a (car l)) (cdr l))
-			(else (cons (car l) (rember a (cdr l)))))))
+  (lambda (a l)
+    (cond
+      ;;;	((atom? a) l)
+      ((null? l) ())
+      ((eq? a (car l)) (cdr l))
+      (else (cons (car l) (rember a (cdr l)))))))
 
 (define t0
-		(rember 1 ()))
+  (rember 1 ()))
 
 (define t1
-		(rember 1 (list 1 2 3 4)))
+  (rember 1 (list 1 2 3 4)))
 
 (define t2
-		(rember 2 (list 1 2 3 4)))
+  (rember 2 (list 1 2 3 4)))
 
 (define t3
-		(rember 3 (list 1 2 3 4)))
+  (rember 3 (list 1 2 3 4)))
 
 (define t4
-		(rember 4 (list 1 2 3 4)))
+  (rember 4 (list 1 2 3 4)))
 
 (define mutirember
-	(lambda (a lat)
-		(cond
-			((null? lat) ())
-			((eq? a (car l)) (mutirember (cdr l)))
-			(else (cons (car l) (mutirember a (cdr l)))))))
+  (lambda (a lat)
+    (cond
+      ((null? lat) ())
+      ((eq? a (car l)) (mutirember (cdr l)))
+      (else (cons (car l) (mutirember a (cdr l)))))))
 
 (define test_mutirember
-		(rember 3 (list 1 2 3 4 3 2 1 3 2 1)))
+  (rember 3 (list 1 2 3 4 3 2 1 3 2 1)))
 
 (define set?
   (lambda (lat)
@@ -332,7 +328,7 @@
       (else (set? (cdr lat))))))
 
 (define test_set?
-	(set? (list 1 2 3 4 5 6 7 2 3 4 5 6 6 8 9 7 7 7)))
+  (set? (list 1 2 3 4 5 6 7 2 3 4 5 6 6 8 9 7 7 7)))
 
 (define make_set
   (lambda (lat)
@@ -342,7 +338,7 @@
       (else (cons (car lat) (make_set (cdr lat)))))))
 
 (define test_make_set
-	(make_set (list 1 2 3 4 5 6 7 2 3 4 5 6 6 8 9 7 7 7 8)))
+  (make_set (list 1 2 3 4 5 6 7 2 3 4 5 6 6 8 9 7 7 7 8)))
 
 (define make_set2
   (lambda (lat)
@@ -352,30 +348,30 @@
 
 
 (define test_make_set2
-	(make_set2 (list 1 2 3 4 5 6 7 2 3 4 5 6 6 8 9 7 7 7 8)))
+  (make_set2 (list 1 2 3 4 5 6 7 2 3 4 5 6 6 8 9 7 7 7 8)))
 
 (define test_make_set3
-	(make_set2 (list "apple" 3 "pear" 4 9 "apple" 3 4)))
+  (make_set2 (list "apple" 3 "pear" 4 9 "apple" 3 4)))
 
 (define shift
-	(lambda (x)
-		(cond
-			((null? x) (quote ()))
-			(else (build (first (first x)) (build (second (first x)) (second x)))))))
-		;	(else (cons (car (car x)) (cons (cons (car (cdr (car x))) (cons (car (cdr x)) (quote ()))) (quote ())))))))
+  (lambda (x)
+    (cond
+      ((null? x) (quote ()))
+      (else (build (first (first x)) (build (second (first x)) (second x)))))))
+;	(else (cons (car (car x)) (cons (cons (car (cdr (car x))) (cons (car (cdr x)) (quote ()))) (quote ())))))))
 
 (define test_shift
-	(shift (list (list 1 2) 3)))
+  (shift (list (list 1 2) 3)))
 
 (define subset?
-	(lambda (set1 set2)
-		(cond
-			((null? set1) #t)
-			(else (and (member? (car set1) set2)
-				(subset? (cdr set1) set2))))))
+  (lambda (set1 set2)
+    (cond
+      ((null? set1) #t)
+      (else (and (member? (car set1) set2)
+                 (subset? (cdr set1) set2))))))
 
 (define eqset?
-	(lambda (set1 set2)
-		(and (subset? set1 set2) (subset? set2 set1))))
+  (lambda (set1 set2)
+    (and (subset? set1 set2) (subset? set2 set1))))
 
 
