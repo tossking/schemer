@@ -1,1 +1,1 @@
-code in <<<<the little schemer>>>>
+code in "The Little Schemer""
