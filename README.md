@@ -1,2 +1,3 @@
-code in "The Little Schemer""
-tested with drracket & mit-scheme
+Code in "The Little Schemer".
+
+Tested with drracket & mit-scheme.
