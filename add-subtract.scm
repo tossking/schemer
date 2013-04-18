@@ -45,28 +45,6 @@
 ;      ((eq? operator '*) (let ((x (/ i (car lat)))) (recursion x (cdr lat) (cons '* (cons (car lat) str)))))
       (else #f))))
 
-
-       
-;(define recursion
-;  (lambda (i lat str)
-;    (cond
-;      ((and (null? lat) (eq? i 0)) str)
-;      ((null? lat) #f)
-;      (else
-;       (or (xx i lat str '+)
-;           (xx i lat str '-)
-;           (xx i lat str '*)
-;           (xx i lat str '/))))))
-       
-;(define recursion
-;  (lambda (i lat str)
- ;   (cond
-  ;    ((and (null? lat) (eq? i 0)) str)
-   ;   ((null? lat) #f)
-    ;  (else
-     ;  (or (let ((x (+ i (car lat)))) (recursion x (cdr lat) (cons '- (cons (car lat) str))))
-      ; (let ((x (- i (car lat)))) (recursion x (cdr lat) (cons '+ (cons (car lat) str)))))))))
-  
 (define t1
   (compute 9 (list 7 2 4)))
 
@@ -75,7 +53,7 @@
 
 (define t3
   (compute 10 (list 1 2 3 4 5)))
-  
+
 (define t4
   (cons 1 (cons 2 (cons 3 (cons 4 '())))))
 

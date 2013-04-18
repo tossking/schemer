@@ -407,9 +407,6 @@
 (define test_revpair
   (revpair '((1 2) (3 4))))
 
-(define test_revpair2
-  (revpair '((1 2) 3 4)))
-
 (define shuffle
   (lambda (pora)
     (cond
@@ -418,17 +415,4 @@
       (else (build (first pora) (shuffle (second pora)))))))
 
 (define test_shuffle
-  (shuffle '((1 2) 3 4)))
-
-(define A
-  (lambda (n m)
-    (display "n=")
-    (display n)
-    (display " m=")
-    (display m)
-    (display "\n")
-    (cond
-      ((zero? n) (add1 m))
-      ((zero? m) (A (sub1 n) 1))
-      (else (A (sub1 n) (A n (sub1 m)))))))
-
+  (shuffle '((1 2) (3 4))))
